@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
-import { zValidator } from '@hono/zod-validator'
 import { HTTPException } from 'hono/http-exception'
 import { z } from 'zod'
+import { validate } from '../lib/validate.js'
 import { products } from '../data/product.js'
 import { orders, type Order } from '../store/orders.js'
 
@@ -12,7 +12,7 @@ const createOrderSchema = z.object({
 
 const app = new Hono()
 
-app.post("/", zValidator("json", createOrderSchema), (c) => {
+app.post("/", validate("json", createOrderSchema), (c) => {
     const { productId, quantity } = c.req.valid("json")
     const product = products.find( (p) => p.id === productId )
     if(!product) {
