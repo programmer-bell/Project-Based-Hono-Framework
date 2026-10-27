@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { HTTPException } from 'hono/http-exception'
 import { z } from 'zod'
 import { validate } from '../lib/validate.js'
-import { products } from '../data/product.js'
+import { products } from '../data/products.js'
 import { orders, type Order } from '../store/orders.js'
 
 const createOrderSchema = z.object({

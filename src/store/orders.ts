@@ -1,5 +1,5 @@
 import { HTTPException } from 'hono/http-exception'
-import { products } from '../data/product.js'
+import { products } from '../data/products.js'
 
 export type OrderStatus = 'pending' | 'paid' | 'refunded'
 

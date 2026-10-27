@@ -1,6 +1,6 @@
 import Stripe from 'stripe'
 import { env } from '../env.js'
-import { products } from '../data/product.js'
+import { products } from '../data/products.js'
 import type { Order } from '../store/orders.js'
 
 export const stripe = new Stripe(env.STRIPE_SECRET_KEY)
