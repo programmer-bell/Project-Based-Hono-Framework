@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import { products } from '../data/product'
+import { products } from '../data/product.js'
 
 const app = new Hono()
 
