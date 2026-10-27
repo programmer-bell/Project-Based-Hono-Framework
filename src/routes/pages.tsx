@@ -1,3 +1,4 @@
+// Browser-facing storefront routes rendered with Hono JSX.
 import { Hono } from 'hono'
 import { z } from 'zod'
 import { validate } from '../lib/validate.js'
@@ -14,6 +15,7 @@ const buySchema = z.object({
 
 const app = new Hono()
 
+// Render the catalog and start Checkout from the submitted purchase form.
 app.get('/', (c) => {
   return c.html(
     <Layout title="Hono Shop">

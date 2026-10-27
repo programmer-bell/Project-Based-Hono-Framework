@@ -1,3 +1,4 @@
+// Holds order types and process-local state for this learning example.
 import { HTTPException } from 'hono/http-exception'
 import { products } from '../data/products.js'
 
@@ -15,6 +16,7 @@ export type Order = {
 
 export const orders = new Map<string, Order>()
 
+// Creates a pending order after confirming its product exists in the catalog.
 export function createOrder(productId: string, quantity: number) {
   const product = products.find((p) => p.id === productId)
   if (!product) {

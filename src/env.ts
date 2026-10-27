@@ -1,3 +1,4 @@
+// Validate required runtime configuration as soon as the application loads.
 import { z } from 'zod'
 
 const envSchema = z.object({

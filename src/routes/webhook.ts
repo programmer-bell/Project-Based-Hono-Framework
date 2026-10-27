@@ -1,3 +1,4 @@
+// Verifies Stripe-signed events before applying payment state changes to orders.
 import { Hono } from 'hono'
 import type Stripe from 'stripe'
 import { stripe } from '../lib/stripe.js'
@@ -14,6 +15,7 @@ app.post('/', async (c) => {
 
   const body = await c.req.text()
 
+  // Verify the raw request body; parsing or changing it first invalidates the signature.
   let event: Stripe.Event
   try {
     event = await stripe.webhooks.constructEventAsync(body, signature, env.STRIPE_WEBHOOK_SECRET)

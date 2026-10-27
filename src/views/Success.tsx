@@ -1,3 +1,4 @@
+// Displays Stripe's session status alongside the order status known by the app.
 import type Stripe from 'stripe'
 import type { Order } from '../store/orders.js'
 

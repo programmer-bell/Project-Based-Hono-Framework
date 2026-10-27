@@ -1,3 +1,4 @@
+// Shares typed request validation and converts Zod issues into HTTP 400 errors.
 import { zValidator } from '@hono/zod-validator'
 import { HTTPException } from 'hono/http-exception'
 import type { ValidationTargets } from 'hono'

@@ -1,3 +1,4 @@
+// Defines the example catalog; monetary prices are integer cents.
 export type Product = {
   id: string
   name: string

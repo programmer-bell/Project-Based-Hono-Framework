@@ -1,3 +1,4 @@
+// Order API for creation, lookup, and admin-authorized refunds.
 import { Hono } from 'hono'
 import { HTTPException } from 'hono/http-exception'
 import { bearerAuth } from 'hono/bearer-auth'

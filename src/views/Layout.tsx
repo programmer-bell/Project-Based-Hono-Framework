@@ -1,3 +1,4 @@
+// Shared HTML document wrapper for the server-rendered pages.
 import type { Child } from 'hono/jsx'
 import { raw } from 'hono/html'
 

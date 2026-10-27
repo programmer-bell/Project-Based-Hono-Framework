@@ -1,3 +1,4 @@
+// Read-only product catalog API, mounted under /api/products.
 import { Hono } from 'hono'
 import { HTTPException } from 'hono/http-exception'
 import { products } from '../data/products.js'

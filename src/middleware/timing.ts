@@ -1,3 +1,4 @@
+// Measures downstream handler time and reports it in the response headers.
 import { createMiddleware } from 'hono/factory'
 
 export const timing = createMiddleware(async (c, next) => {

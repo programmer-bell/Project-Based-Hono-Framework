@@ -1,3 +1,4 @@
+// Composes global middleware, feature route groups, and application-level errors.
 import { Hono } from 'hono'
 import { serveStatic } from '@hono/node-server/serve-static'
 import { logger } from 'hono/logger'
@@ -14,6 +15,7 @@ import webhook from './routes/webhook.js'
 
 const app = new Hono()
 
+// Apply request concerns before route handlers; CORS is limited to the JSON API.
 app.use(logger())
 app.use(timing)
 app.use(requestId())
@@ -30,6 +32,7 @@ app.route('/', api)
 app.route('/webhook', webhook)
 app.route('/', pages)
 
+// Keep unmatched routes and thrown HTTP errors in the same JSON error shape.
 app.notFound((c) => {
   return c.json({ error: { message: `Not found: ${c.req.path}`, requestId: c.get('requestId') } }, 404)
 })

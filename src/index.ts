@@ -1,3 +1,4 @@
+// Starts the Node HTTP server and forwards each request to the Hono app.
 import { serve } from '@hono/node-server'
 import app from './app.js'
 

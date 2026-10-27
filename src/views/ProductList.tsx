@@ -1,3 +1,4 @@
+// Renders the catalog as product cards with quantity-limited purchase forms.
 import type { Product } from '../data/products.js'
 
 export const ProductList = ({ products }: { products: Product[] }) => (
