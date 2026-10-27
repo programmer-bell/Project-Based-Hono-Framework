@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { HTTPException } from 'hono/http-exception'
 import { products } from '../data/product.js'
 
 const app = new Hono()
@@ -16,7 +17,7 @@ app.get("/:id", (c) => {
   const product = products.find((p) => p.id === id)
 
   if (!product) {
-    return c.json({ error: 'Product not found' }, 404)
+    throw new HTTPException(404, { message: "Product not found" })
   }
 
   return c.json(product)
