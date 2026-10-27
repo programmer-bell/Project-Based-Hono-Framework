@@ -4,7 +4,7 @@ import { products } from '../data/product.js'
 
 const app = new Hono()
 
-app.get("/", (c) => {
+app.get('/', (c) => {
   const category = c.req.query('category')
   if (category) {
     return c.json(products.filter((p) => p.category === category))
@@ -12,14 +12,12 @@ app.get("/", (c) => {
   return c.json(products)
 })
 
-app.get("/:id", (c) => {
+app.get('/:id', (c) => {
   const id = c.req.param('id')
   const product = products.find((p) => p.id === id)
-
   if (!product) {
-    throw new HTTPException(404, { message: "Product not found" })
+    throw new HTTPException(404, { message: 'Product not found' })
   }
-
   return c.json(product)
 })
 
