@@ -1,12 +1,19 @@
 import { Hono } from 'hono'
-import { products } from '../data/product.js';
-import { orders, type Order } from '../store/orders.js';
+import { zValidator } from '@hono/zod-validator'
+import { z } from 'zod'
+import { products } from '../data/product.js'
+import { orders, type Order } from '../store/orders.js'
+
+const createOrderSchema = z.object({
+    productId: z.string(),
+    quantity: z.number().int().positive(),
+})
 
 const app = new Hono()
 
-app.post("/", async(c) => {
-    const body = await c.req.json()
-    const product = products.find( (p) => p.id === body.productId )
+app.post("/", zValidator("json", createOrderSchema), (c) => {
+    const { productId, quantity } = c.req.valid("json")
+    const product = products.find( (p) => p.id === productId )
     if(!product) {
         return c.json({ message: "Product not found"}, 404)
     }
@@ -14,12 +21,21 @@ app.post("/", async(c) => {
     const order: Order = {
         id: crypto.randomUUID(),
         productId: product.id,
-        quantity: body.quantity,
-        amount: product.price * body.quantity,
+        quantity: quantity,
+        amount: product.price * quantity,
         status: "pending",
     }
     orders.set(order.id, order)
     return c.json(order, 201)
+})
+
+app.get("/:id", (c) => {
+    const { id } = c.req.param()
+    const order = orders.get(id)
+    if(!order) {
+        return c.json({ message: "Order not found"}, 404)
+    }
+    return c.json(order)
 })
 
 export default app
