@@ -9,6 +9,8 @@ import { timing } from './middleware/timing.js'
 import products from './routes/products.js'
 import orders from './routes/orders.js'
 import checkout from './routes/checkout.js'
+import pages from './routes/pages.js'
+import webhook from './routes/webhook.js'
 
 const app = new Hono()
 
@@ -25,6 +27,8 @@ api.route('/orders', orders)
 api.route('/checkout', checkout)
 
 app.route('/', api)
+app.route('/webhook', webhook)
+app.route('/', pages)
 
 app.notFound((c) => {
   return c.json({ error: { message: `Not found: ${c.req.path}`, requestId: c.get('requestId') } }, 404)
