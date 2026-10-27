@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import { zValidator } from '@hono/zod-validator'
+import { HTTPException } from 'hono/http-exception'
 import { z } from 'zod'
 import { products } from '../data/product.js'
 import { orders, type Order } from '../store/orders.js'
@@ -15,7 +16,7 @@ app.post("/", zValidator("json", createOrderSchema), (c) => {
     const { productId, quantity } = c.req.valid("json")
     const product = products.find( (p) => p.id === productId )
     if(!product) {
-        return c.json({ message: "Product not found"}, 404)
+        throw new HTTPException(404, { message: "Product not found" })
     }
 
     const order: Order = {
@@ -33,7 +34,7 @@ app.get("/:id", (c) => {
     const { id } = c.req.param()
     const order = orders.get(id)
     if(!order) {
-        return c.json({ message: "Order not found"}, 404)
+        throw new HTTPException(404, { message: "Order not found" })
     }
     return c.json(order)
 })
