@@ -2,6 +2,7 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { logger } from 'hono/logger'
 import { requestId } from 'hono/request-id'
+import { HTTPException } from 'hono/http-exception'
 import { secureHeaders } from 'hono/secure-headers'
 import { cors } from 'hono/cors';
 import { timing } from './middleware/timing.js';
@@ -31,6 +32,21 @@ app.notFound((c) => {
     {
       error : { message: `Not Found: ${c.req.path}`, requestId: c.get('requestId') },
     }, 404)
+})
+
+app.onError((err, c) => {
+  if (err instanceof HTTPException) {
+    return c.json(
+      {
+        error : { message: err.message, requestId: c.get('requestId') }}, 
+      err.status
+    )
+  }
+  console.error(err)
+  return c.json(
+    {
+      error : { message: 'Internal Server Error', requestId: c.get('requestId') },
+    }, 500)
 })
 
 serve(
