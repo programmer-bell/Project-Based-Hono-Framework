@@ -2,12 +2,15 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { logger } from 'hono/logger'
+import { timing } from './middleware/timing.js';
 import products from './routes/products.js'
 import orders from './routes/orders.js'
 
 const app = new Hono()
 
 app.use(logger()) 
+app.use(timing)
+
 app.get('/', (c) => {
   return c.text('Hello Hono!')
 })
